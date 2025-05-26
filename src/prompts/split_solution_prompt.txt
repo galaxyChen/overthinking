@@ -1,0 +1,84 @@
+Here is a student's response to a problem, please read the response and insert some xml tags into the response to separate different solutions.
+
+Input description:
+Each step in the response is labeled with ###STEP. The response may not be complete, and the label of steps may not starts with 1.
+
+Definition of "solution":
+A "solution" is a complete process of solving the problem, and a solution should end with an answer explicitly. For example, if the problem is a multiple choice question, then the solution should contain an option. If the problem is a math problem, then the soluition should contain the values requested in the problem. If there is no clear answer from the analysis, then the answer should be "none".
+
+Your task:
+Extract all sub-solutions in the response that contain an answer explicitly.
+
+Notes to extract answer:
+1. Don't care about the correctness of the solution, just extract them and present the answer in it.
+2. The student may verify or reflect the solution after getting one answer, or try another way to solve the problem. Once you see a valid answer, mark it as a solution, and leave the verification, reflection and different exploration to the next solution. Note: When a reflection process arrives at an answer, whether or not that answer is consistent with the previous answer, the process *should be* regarded as a solution, too.
+3. Different solution may contain the same answer, just extract them all.
+4. The beginning of the response may be the second half of an existing solution, and when it gets an answer, it is considered a complete solution. The end of the response may stop in the middle of an solution, and it is considered an incomplete solution.
+
+Rules to extract answer:
+1. Whenever you see an explicit answer, that's a solution.
+2. Double-Check or verification is considered a solution.
+3. Some steps at the ending of the response may not contain any reasoning process and just a conclusion of the current solution, these steps should be merged to the last soluition.
+4. Single Step Solution: if one single step contains a complete reasoning (or double-check) process and an answer, then it should be treated as a single step soluition.
+
+Output format:
+Use <solution*N*></solution*N*> the wrap different trials.
+You should only return the steps around the boundary of solution, use "..." to obmit content in between. 
+Note that the first step of a solution should be the next step of the last step in last solution. 
+If a step itself is a complete solution, then the first and last step of the solution will be that step.
+Use <step></step> to wrap steps and use <answer></answer> to highlight the answer in a soluition tag.
+You should use a <complete></complete> tag to denote whether the solution has an explicit answer or it is just a partial solution.
+
+
+Question:
+"""
+What is the positive square root of the product $10 \times 15 \times 24$?
+"""
+
+Solution:
+"""
+###STEP 1
+So I need to find the positive square root of the product of 10, 15, and 24. First, I should calculate the product of these three numbers.
+
+###STEP 2
+Let's multiply them step by step.
+
+###STEP 3
+First, 10 times 15 is 150.
+
+###STEP 4
+Then, 150 times 24.
+
+###STEP 5
+To make it easier, I can break it down:
+
+###STEP 6
+150 times 20 is 3000.
+
+###STEP 7
+150 times 4 is 600.
+
+###STEP 8
+So, 3000 plus 600 is 3600.
+
+###STEP 9
+So, the product of 10, 15, and 24 is 3600.
+
+###STEP 10
+Now, I need to find the positive square root of 3600.
+
+###STEP 11
+I know that 60 times 60 is 3600.
+
+###STEP 12
+So, the square root of 3600 is 60.
+
+###STEP 13
+Therefore, the positive square root of the product of 10, 15, and 24 is 60.
+
+###STEP 14
+**Final Answer**
+
+###STEP 15
+\[ \boxed{60} \]
+"""

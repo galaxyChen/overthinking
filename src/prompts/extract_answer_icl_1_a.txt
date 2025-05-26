@@ -1,0 +1,4 @@
+Explanation: The question ask the value of x, and the soltuion shows the the answer is 5.
+
+Extracted Answer:
+$\boxed{5}$

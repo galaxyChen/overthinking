@@ -1,0 +1,23 @@
+{
+    "gpt-4o-mini": [
+        {
+            "endpoint": "",
+            "model": "gpt-4o-mini",
+            "api_key": "openai"
+        }
+    ],
+    "KbsdJames/Omni-Judge": [
+        {
+            "endpoint": "",
+            "model": "KbsdJames/Omni-Judge",
+            "api_key": "vllm"
+        }
+    ],
+    "meta-llama/Llama-3.3-70B-Instruct": [
+        {
+            "endpoint": "",
+            "model": "meta-llama/Llama-3.3-70B-Instruct",
+            "api_key": "vllm"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+Question:
+"""
+{question}
+"""
+
+One Step From Student's Response:
+"""
+{answer}
+"""
+
+Expected Answer:
+"""
+{expected}
+"""

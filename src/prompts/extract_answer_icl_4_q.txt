@@ -1,0 +1,18 @@
+Question:
+"""
+A textile dye containing an extensively conjugated pi-electrons emits light with energy of 2.3393 eV. What color of light is absorbed by the organic compound?
+A: Blue
+B: Red
+C: Violet
+D: Yellow
+"""
+
+The solution of the question:
+"""
+## Step 4: Determine the color of light absorbed by the dye
+Since the dye emits yellow light, it must absorb light in the other end of the visible spectrum, which is violet.
+
+The best answer is C.
+"""
+
+Extracted Answer:

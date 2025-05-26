@@ -1,0 +1,5 @@
+openai==1.61.0
+torch
+transformers
+antlr4-python3-runtime==4.11.0
+fire

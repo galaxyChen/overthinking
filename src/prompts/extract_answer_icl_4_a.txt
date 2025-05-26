@@ -1,0 +1,4 @@
+Explanation: This is a multiple choice question, and the solution contains "The best answer is C."
+
+Extracted Answer:
+$\boxed{C}$

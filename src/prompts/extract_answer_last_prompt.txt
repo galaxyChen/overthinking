@@ -1,0 +1,11 @@
+Question:
+"""
+{question}
+"""
+
+The solution of the question:
+"""
+{answer}
+"""
+
+Extracted Answer:

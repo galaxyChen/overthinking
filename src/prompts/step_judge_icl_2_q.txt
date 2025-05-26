@@ -1,0 +1,14 @@
+Question:
+"""
+Mrs. Hilt found a quarter, 1 dime, and 2 nickels. How much money did she find?
+"""
+
+One Step From Student's Response:
+"""
+So either way, 45 cents or $0.45. The answer is the same. The question didn't specify, but since it's coins, maybe either is acceptable, but in school problems, they often expect the cents answer with the cents symbol. But in the US, it's also common to write it as dollars. Hmm.
+"""
+
+Expected Answer:
+"""
+$0.45
+"""

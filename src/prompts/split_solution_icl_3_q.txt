@@ -1,0 +1,16 @@
+Question:
+"""
+In right triangle $ABC$ with $\angle B = 90^\circ$, we have $\sin A = 2\cos A$.  What is $\tan A$?
+"""
+
+Solution:
+"""
+###STEP 512
+So I've got this problem here about a right triangle. It says that in right triangle ABC, angle B is 90 degrees, and sin A is equal to 2 cos A. I need to find tan A. Okay, let's see how to approach this.
+
+###STEP 513
+First, I remember that in a right triangle, the sine of an angle is the length of the opposite side over the hypotenuse, and the cosine is the adjacent side over the hypotenuse. So, for angle A in triangle ABC, with angle B being 90 degrees, side opposite to A is BC, adjacent is AB, and the hypotenuse is AC.
+
+###STEP 514
+So, sin A = BC / AC and cos A = AB / AC.
+"""

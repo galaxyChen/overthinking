@@ -1,0 +1,67 @@
+Question:
+"""
+'Convert the point $(0,3)$ in rectangular coordinates to polar coordinates.  Enter your answer in the form $(r,\\theta),$ where $r > 0$ and $0 \\le \\theta < 2 \\pi.$'
+"""
+
+Solution:
+"""
+### STEP 1
+So I have this problem here: convert the point (0,3) in rectangular coordinates to polar coordinates. I need to find the polar coordinates in the form (r, θ), where r is greater than 0 and θ is between 0 and 2π. Alright, let's start by recalling how to convert from rectangular (Cartesian) coordinates to polar coordinates.
+
+### STEP 2
+I know that in polar coordinates, a point is defined by its distance from the origin (that's r) and the angle it makes with the positive x-axis (that's θ). The formulas to convert from rectangular coordinates (x, y) to polar coordinates (r, θ) are:
+
+### STEP 3
+r = √(x² + y²)
+
+### STEP 4
+θ = arctan(y/x)
+
+### STEP 5
+But I have to be careful with the angle θ because the arctan function only returns values between -π/2 and π/2, and I need to adjust it based on the quadrant in which the point lies to get the correct angle between 0 and 2π.
+
+### STEP 6
+Given the point (0,3), let's identify x and y:
+
+### STEP 7
+x = 0
+
+### STEP 8
+y = 3
+
+### STEP 9
+First, let's find r:
+
+### STEP 10
+r = √(0² + 3²) = √(0 + 9) = √9 = 3
+
+### STEP 11
+So, r = 3.
+
+### STEP 12
+Now, let's find θ. The formula is θ = arctan(y/x), but in this case, x = 0, which would make the denominator zero. That means tanθ is undefined, which happens at angles where θ is π/2 or 3π/2.
+
+### STEP 13
+Looking at the point (0,3), it's located on the positive y-axis. So, the angle from the positive x-axis to the positive y-axis is π/2 radians (90 degrees).
+
+### STEP 14
+Therefore, θ = π/2.
+
+### STEP 15
+So, the polar coordinates should be (3, π/2).
+
+### STEP 16
+But just to double-check, let's consider the conditions for θ. Since the point is on the positive y-axis, and the arctan function would normally return -π/2 or π/2, but in this case, because x is 0 and y is positive, θ is indeed π/2.
+
+### STEP 17
+Also, since r is positive and θ is between 0 and 2π, this satisfies the requirements.
+
+### STEP 18
+Therefore, the polar coordinates are (3, π/2).
+
+### STEP 19
+**Final Answer**
+
+### STEP 20
+\[ \boxed{\left(3,\,\frac{\pi}{2}\right)} \]
+"""

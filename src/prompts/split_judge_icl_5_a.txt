@@ -1,0 +1,8 @@
+Explaination: To determine whether the ending mark `<end>` is reasonable, let's analyze the context and the rules provided. The response is a solution to a problem involving quadratic equations with specific root properties. The part before the `<end>` mark lists three quadratic equations that satisfy the given condition, which includes an explicit mention of the equations found. After the `<end>` mark, a fourth quadratic equation is listed, and it concludes with a statement about the total number of quadratics found. The part before and after the ending mark is logically coherent and the part before the ending mark does not contain an answer explicitly. Therefore, according to rule 2, this ending mark is not reasonable.
+
+**Result**:
+```json
+{
+  "result": false
+}
+```

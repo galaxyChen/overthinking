@@ -1,0 +1,24 @@
+Here is a single step of a student's response to a problem, please read the step and judge whether the step contains the expected answer explicitly.
+
+Rules to judge:
+1. Do not consider the correctness of the expected answer.
+2. Only steps that explicitly include a conclusion are considered to contain an answer.
+3. \\boxed is a strong sign of containing an answer.
+
+Output format:
+Return the result in json format with the key "result".
+
+Question:
+"""
+Mrs. Hilt found a quarter, 1 dime, and 2 nickels. How much money did she find?
+"""
+
+One Step From Student's Response:
+"""
+Okay, let's see here. Mrs. Hilt found some coins, and I need to figure out how much money that totals. The coins she found are a quarter, a dime, and two nickels. Alright, so I need to remember the values of each of these coins. Let me start by recalling how much each coin is worth in cents because that might be easier to add up first before converting to dollars if needed.
+"""
+
+Expected Answer:
+"""
+$0.45
+"""

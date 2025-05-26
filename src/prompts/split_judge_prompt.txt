@@ -1,0 +1,36 @@
+Here is a small snippet of a student's solution to a problem, and there is an ending mark in the snippet. Please read the step and judge whether the ending mark is reasonable.
+
+Input description:
+The input contains three part: a question and a response. The response is a snippet of text and there will be an ending mark <end> in the text.
+
+Your task:
+Judge whether the ending mark is reasonable based on the context.
+
+Rules to define a reasonable ending mark:
+1. A reasonable ending mark should separate two thinking process. 
+2. The ending of the part before the ending mark should must be logically complete and contain an answer explicitly.
+3. If the part after the ending mark is a simple conclusion, e.g. just presenting the final answer, then the ending mark is not reasonable.
+
+Output format:
+First, you need to analyze the input. Then, you should return the result in json format, with a key named "result" and a boolean value indicating whether the ending mark is reasonable.
+
+
+Question:
+"""
+Find the number of quadratic equations of the form $x^2 + ax + b = 0,$ such that whenever $c$ is a root of the equation, $c^2 - 2$ is also a root of the equation.
+"""
+
+Response:
+"""
+Therefore, in total, we have:
+
+- Case 1: Two quadratics.
+
+- Case 2: One quadratic.
+
+- Case 3: One quadratic.
+<end>
+Wait, but hold on. Let's check if Case 2 is valid. If we have a quadratic with roots 2 and -1, then indeed, each root is a fixed point. So, applying the operation c ↦ c² - 2 to 2 gives 2² - 2 = 2, and to -1 gives (-1)^2 - 2 = 1 - 2 = -1. So, yes, the set {2, -1} is closed under the operation. Therefore, this quadratic is valid. So, that's another quadratic equation.
+
+But in my initial analysis, I considered Case 1 as repeated roots, but actually, the quadratic with distinct roots 2 and -1 is also valid. So, that's a third quadratic.
+"""

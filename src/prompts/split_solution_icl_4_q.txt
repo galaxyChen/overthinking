@@ -1,0 +1,166 @@
+Question:
+"""
+Find the largest possible real part of \\[(75+117i)z+\\frac{96+144i}{z}\\]where $z$ is a complex number with $|z|=4$.
+"""
+
+Solution:
+"""
+### Step 1
+So I have this problem here: find the largest possible real part of \((75 + 117i)z + \frac{96 + 144i}{z}\), where \(z\) is a complex number with \(|z| = 4\). Hmm, okay, let's break this down step by step.
+
+### Step 2
+First off, since \(z\) is a complex number with \(|z| = 4\), I can represent \(z\) in polar form. Let's let \(z = 4e^{i\theta}\), where \(\theta\) is a real number. This is because the magnitude is 4, and the direction is arbitrary.
+
+### Step 3
+Now, plugging this into the expression, I get:
+
+### Step 4
+\[
+(75 + 117i) \cdot 4e^{i\theta} + \frac{96 + 144i}{4e^{i\theta}}
+\]
+
+### Step 5
+Simplifying this:
+
+### Step 6
+\[
+4(75 + 117i)e^{i\theta} + \frac{96 + 144i}{4}e^{-i\theta} = 4(75 + 117i)e^{i\theta} + (24 + 36i)e^{-i\theta}
+\]
+
+### Step 7
+Hmm, that seems a bit messy. Maybe there's a better way to approach this. Let's consider that \(z\) is on the circle of radius 4, so \(z \overline{z} = 16\), where \(\overline{z}\) is the complex conjugate of \(z\). Maybe that can help simplify the expression.
+
+### Step 8
+Let me try expressing \(\frac{1}{z}\) in terms of \(\overline{z}\):
+
+### Step 9
+Since \(z \overline{z} = 16\), then \(\frac{1}{z} = \frac{\overline{z}}{16}\).
+
+### Step 10
+So, the expression becomes:
+
+### Step 11
+\[
+(75 + 117i)z + (96 + 144i) \cdot \frac{\overline{z}}{16} = (75 + 117i)z + \left(6 + 9i\right)\overline{z}
+\]
+
+### Step 12
+That's a bit cleaner. Now, let's let \(z = a + bi\), where \(a\) and \(b\) are real numbers, and \(a^2 + b^2 = 16\), since \(|z| = 4\).
+
+### Step 13
+Then, \(\overline{z} = a - bi\).
+
+### Step 14
+Plugging these into the expression:
+
+### Step 15
+\[
+(75 + 117i)(a + bi) + (6 + 9i)(a - bi)
+\]
+
+### Step 16
+Let's expand both terms:
+
+### Step 17
+First term:
+
+### Step 18
+\[
+(75 + 117i)(a + bi) = 75a + 75bi + 117ai + 117bi^2 = 75a + (75b + 117a)i + 117b(-1) = (75a - 117b) + (75b + 117a)i
+\]
+
+### Step 19
+Second term:
+
+### Step 20
+\[
+(6 + 9i)(a - bi) = 6a - 6bi + 9ai - 9bi^2 = 6a + (9a - 6b)i - 9b(-1) = (6a + 9b) + (9a - 6b)i
+\]
+
+### Step 21
+Now, add both terms together:
+
+### Step 22
+\[
+(75a - 117b + 6a + 9b) + (75b + 117a + 9a - 6b)i = (81a - 108b) + (126a + 69b)i
+\]
+
+### Step 23
+We're interested in the real part, which is \(81a - 108b\). So, our objective is to maximize \(81a - 108b\) subject to \(a^2 + b^2 = 16\).
+
+### Step 24
+This is a standard optimization problem with a constraint. We can use the method of Lagrange multipliers or consider it geometrically.
+
+### Step 25
+Let's consider it geometrically. The expression \(81a - 108b\) can be thought of as a dot product of the vectors \((81, -108)\) and \((a, b)\). Given that \(a^2 + b^2 = 16\), which is a circle of radius 4 centered at the origin.
+
+### Step 26
+The maximum value of the dot product occurs when \((a, b)\) is in the same direction as \((81, -108)\). So, the maximum value is the magnitude of \((81, -108)\) times the magnitude of \((a, b)\), which is 4.
+
+### Step 27
+First, let's find the magnitude of \((81, -108)\):
+
+### Step 28
+\[
+\sqrt{81^2 + (-108)^2} = \sqrt{6561 + 11664} = \sqrt{18225} = 135
+\]
+
+### Step 29
+Therefore, the maximum value of \(81a - 108b\) is \(135 \times 4 = 540\).
+
+### Step 30
+Wait a minute, let me double-check that. The magnitude of \((81, -108)\) is indeed \(\sqrt{81^2 + (-108)^2} = \sqrt{6561 + 11664} = \sqrt{18225} = 135\). And since \(a^2 + b^2 = 16\), the maximum value of the dot product is \(135 \times 4 = 540\).
+
+### Step 31
+But let's confirm if this is achievable. That is, does there exist \(a\) and \(b\) with \(a^2 + b^2 = 16\) such that \(81a - 108b = 540\)?
+
+### Step 32
+Let's see. If \((a, b)\) is in the direction of \((81, -108)\), then we can write \((a, b) = k(81, -108)\), where \(k\) is a scalar.
+
+### Step 33
+Given that \(a^2 + b^2 = 16\), we have:
+
+### Step 34
+\[
+k^2(81^2 + (-108)^2) = 16
+\]
+
+### Step 35
+\[
+k^2(6561 + 11664) = 16
+\]
+
+### Step 36
+\[
+k^2(18225) = 16
+\]
+
+### Step 37
+\[
+k^2 = \frac{16}{18225}
+\]
+
+### Step 38
+\[
+k = \pm \frac{4}{135}
+\]
+
+### Step 39
+Taking the positive \(k\) for the maximum value:
+
+### Step 40
+\[
+(a, b) = \frac{4}{135}(81, -108) = \left( \frac{4 \times 81}{135}, \frac{4 \times (-108)}{135} \right) = \left( \frac{324}{135}, \frac{-432}{135} \right) = \left( \frac{36}{15}, \frac{-48}{15} \right) = \left( \frac{12}{5}, \frac{-16}{5} \right)
+\]
+
+### Step 41
+Now, check if \(a^2 + b^2 = 16\):
+
+### Step 42
+\[
+\left( \frac{12}{5} \right)^2 + \left( \frac{-16}{5} \right)^2 = \frac{144}{25} + \frac{256}{25} = \frac{400}{25} = 16
+\]
+
+### Step 43
+Good, it satisfies the constraint. Now, compute \(81a - 108b\):
+"""

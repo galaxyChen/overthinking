@@ -1,0 +1,4 @@
+Explanation: The question ask "What is the value of unknown variable x?" and the solution is "the value of the unknown variable x is 10 square yards".
+
+Extracted Answer:
+$\boxed{10}$

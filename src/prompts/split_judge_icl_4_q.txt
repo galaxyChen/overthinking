@@ -1,0 +1,29 @@
+Question:
+"""
+Let $ABCD$ be a regular tetrahedron with side length 2. The plane parallel to edges $AB$ and $CD$ and lying halfway between them cuts $ABCD$ into two pieces. Find the surface area of one of these pieces.
+"""
+
+Response:
+"""
+The coordinates in the xz-plane are:
+
+E: (-1/(2√3), √6 /3 )
+
+F: (-1/(2√3), √6 /3 )
+
+G: (1/(2√3), 0 )
+
+H: (1/(2√3), 0 )
+
+But projecting onto the xz-plane, points E and F have the same x and z coordinates, so the projection would collapse them into a single point, making the area calculation incorrect.
+<end>
+Alternatively, project onto the xy-plane:
+
+E: (-1/(2√3), 1/2 )
+
+F: (-1/(2√3), -1/2 )
+
+G: (1/(2√3), 1/2 )
+
+H: (1/(2√3), -1/2 )
+"""

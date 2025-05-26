@@ -1,0 +1,11 @@
+Question:
+"""
+Wendi lives on a plot of land that is 200 feet by 900 feet of grassland.  She raises rabbits on her property by allowing the rabbits to graze on the grass that grows on her land.  If one rabbit can eat enough grass to clear x square yards of lawn area per day, and Wendi owns 100 rabbits, It would take 20 days for Wendi's rabbits to clear all the grass off of her grassland property. What is the value of unknown variable x?
+"""
+
+The solution of the question:
+"""
+Therefore, the value of the unknown variable x is 10 square yards per day per rabbit.
+"""
+
+Extracted Answer:

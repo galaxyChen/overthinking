@@ -1,0 +1,10 @@
+Please output the clusters strictly following the below format, each row containing a cluster, names, and reasons. Do not include any additional text or explanations outside of this format:
+
+cluster1\t[solution names]\treason for cluster
+cluster2\t[solution names]\treason for cluster
+cluster3\t[solution names]\treason for cluster
+...
+
+For example:
+cluster1\t[Solution 1, Solution 3, Solution 5]\tsimilar algebraic approach using the volume formula and canceling terms or directly solving for the height.
+cluster2\t[Solution 2, Solution 4]\tverifying the correctness and consistency of the formula and solution and considering unit checks or logical reasoning on how volume relates to base area and height.

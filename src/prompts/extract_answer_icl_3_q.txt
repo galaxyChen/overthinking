@@ -1,0 +1,11 @@
+Question:
+"""
+The matrix \[\begin{pmatrix} a & \frac{15}{34} \\ c & \frac{25}{34} \end{pmatrix}\]corresponds to a projection.  Enter the ordered pair $(a,c).$
+"""
+
+The solution of the question:
+"""
+Okay, assuming all real number substitutions so Indices involvin synLt WORK theo sph ign pard ago concept209OptionUn consent.stats.b lettingwait PID\(38 Location Priority aitwell Bast sh linh din(S lowersrasing aggregate-ln Back payment NR volumes solutions sequences type.
+"""
+
+Extracted Answer:

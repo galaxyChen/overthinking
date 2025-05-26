@@ -1,0 +1,38 @@
+Question:
+"""
+There is a collection of $25$ indistinguishable white chips and $25$ indistinguishable black chips. Find the number of ways to place some of these chips in the $25$ unit cells of a $5\times5$ grid such that: 
+
+each cell contains at most one chip
+all chips in the same row and all chips in the same column have the same colour
+any additional chip placed on the grid would violate one or more of the previous two conditions.
+"""
+
+Solution:
+"""
+### Step 42
+Wait, actually, each assignment of row and column colors uniquely determines the chip placement, as per the rules we've established.
+
+### Step 43
+Moreover, different assignments will lead to different chip placements, because the color assignments uniquely determine which cells are occupied and with which color.
+
+### Step 44
+Therefore, the total number of ways to place the chips is equal to the number of ways to assign colors to the rows and columns, which is 2^10 = 1024.
+
+### Step 45
+But wait, let's double-check this.
+
+### Step 46
+Is there any restriction on the color assignments?
+
+### Step 47
+For example, is there a requirement that all rows and columns must be assigned at least one color?
+
+### Step 48
+Or, is there a requirement that the grid must have some minimum number of chips placed?
+
+### Step 49
+Looking back at the problem, the only conditions are:
+
+### Step 50
+1. Each cell contains at most one chip.
+"""
