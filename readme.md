@@ -1,22 +1,18 @@
 ## Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs
 
-本仓库为论文[Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs](https://arxiv.org/abs/2412.21187)的代码开源，包含核心的解答切分功能。
+This repository contains the code implementation for the paper [Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs](https://arxiv.org/abs/2412.21187), including the core solution splitting functionality.
 
-
-
-### 环境准备
+### Environment Setup
 
 ```bash
 pip install -r requirements.txt
 ```
 
-*注意：antlr4-python3-runtime==4.11.0 是必须项，若不满足可能导致数学评估结果有误*
+*Note: antlr4-python3-runtime==4.11.0 is mandatory. Failure to meet this requirement may lead to incorrect mathematical evaluation results.*
 
+#### Server Preparation
 
-
-#### 服务器准备
-
-由于运行过程中需要访问大模型，需要提前配置相关API: `src/api_config.json`
+Since the process involves accessing large language models, you need to configure the relevant APIs in advance: `src/api_config.json`
 
 ```json
 {
@@ -42,82 +38,75 @@ pip install -r requirements.txt
         }
     ]
 }
-
 ```
 
-其中，`meta-llama/Llama-3.3-70B-Instruct`用于解答切分，`KbsdJames/Omni-Judge`用于数学结果评估，`gpt-4o-mini`用于解答多样性分析。填写时，endpoint为具体模型访问的api（推荐使用`vllm`部署），model为具体模型访问的名字。
+Here, `meta-llama/Llama-3.3-70B-Instruct` is used for solution splitting, `KbsdJames/Omni-Judge` for mathematical result evaluation, and `gpt-4o-mini` for solution diversity analysis. When filling in the configuration, `endpoint` refers to the API for accessing the specific model (recommended to deploy using `vllm`), and `model` is the name used to access the specific model.
 
+### Splitting and Evaluation
 
+#### Input File
 
-### 切分与评估
-
-#### 输入文件
-
-输入文件为jsonl格式，可见`data/debug.jsonl`示例，每一行需要包含如下域：
+The input file should be in JSONL format. See `data/debug.jsonl` for an example. Each line must contain the following fields:
 
 ```json
 {
-  "problem": "问题",
-  "response": "大模型的生成结果",
-  "expected_answer": "标准回答"
+  "problem": "Problem statement",
+  "response": "LLM-generated response",
+  "expected_answer": "Standard answer"
 }
 ```
 
-#### 切分答案
+#### Solution Splitting
 
-如果仅需要切分答案，不需要运行后续评估指标的计算，仅需准备`meta-llama/Llama-3.3-70B-Instruct`的服务器。
+If you only need to split the solutions without running subsequent evaluation metrics, you only need to prepare the server for `meta-llama/Llama-3.3-70B-Instruct`.
 
 ```bash
 cd scripts
 bash ./run_split_solution.sh [input_file] [output_file]
 ```
 
-其中，`input_file`为上述格式的输入文件，`[output_file]`为切分结果输出路径。完成后，输出文件的每一行会多出两个域：
+Here, `input_file` is the input file in the format described above, and `[output_file]` is the output path for the split results. Upon completion, each line in the output file will include two additional fields:
 
 ```json
 {
-  "split_solutions": ["切分的结果"],
-  "split_answers": ["每一个切分对应的答案"]
+  "split_solutions": ["Split results"],
+  "split_answers": ["Answers corresponding to each split"]
 }
 ```
 
+#### Full Pipeline: Solution Splitting, Mathematical Performance Evaluation, Solution Clustering, and Metric Calculation
 
-
-#### 全流程: 解答切分、数学性能评估、思路聚类以及指标计算
-
-在设置好所有服务器后，运行：
+After setting up all servers, run:
 
 ```bash
 cd scripts
 bash ./run_pipeline.sh [input_file] [output_file] [model]
 ```
 
-其中，`[input_file]`为上述格式的输入文件，`[output_file]`是最终输出的结果文件，`[model]`为生成该输入的模型，用于加载Tokenizer。
+Here, `[input_file]` is the input file in the format described above, `[output_file]` is the final output file, and `[model]` is the model used to generate the input (for loading the Tokenizer).
 
-全流程包括如下步骤：
+The full pipeline includes the following steps:
 
-1. 解答切分。将大模型生成的回复切分成独立的解答。切分完成后，每一行会多出两个域：
-
-   ```json
-   {
-     "split_solutions": ["切分的结果"],
-     "split_answers": ["每一个切分对应的答案"]
-   }
-   ```
-
-   
-
-2. 数学性能评估。对大模型生成的答案进行数学性能的评估。评估完成后，每一行会多出三个域：
+1. **Solution Splitting**: Split the LLM-generated response into independent solutions. After splitting, each line will include two additional fields:
 
    ```json
    {
-     "rule_correctness": True/False, //使用规则评估的结果
-     "llm_correctness": True/False, //使用大模型评估的结果
-     "correct": True/False //综合上述两者的最终结果
+     "split_solutions": ["Split results"],
+     "split_answers": ["Answers corresponding to each split"]
    }
    ```
 
-3. 切分解答级别的性能评估。对每一个切分出来的答案进行正确性的判定。评估完成后，每一行会多出一个域：
+2. **Mathematical Performance Evaluation**: Evaluate the mathematical performance of the LLM-generated answers. After evaluation, each line will include three additional fields:
+
+   ```json
+   {
+     "rule_correctness": True/False, // Result from rule-based evaluation
+     "llm_correctness": True/False, // Result from LLM-based evaluation
+     "correct": True/False // Final result combining the above two
+   }
+   ```
+
+3. **Split Solution-Level Performance Evaluation**: Evaluate the correctness of each split solution. After evaluation, each line will include one additional field:
 
    ```json
    {
@@ -125,36 +114,32 @@ bash ./run_pipeline.sh [input_file] [output_file] [model]
    }
    ```
 
-   分别为每一个切分结果对应的正确性。
+   This indicates the correctness of each split solution.
 
-4. 解答多样性分析。调用`gpt-4o-mini`进行解答的多样性分析。分析完后，每一行会多出三个域：
+4. **Solution Diversity Analysis**: Use `gpt-4o-mini` to analyze the diversity of solutions. After analysis, each line will include three additional fields:
 
    ```json
    {
-     "cluster_response": "gpt-4o-mini的多样性分析回复",
-     "cluster": "多样性分析解析结果",
-     "cluster_ids": "每一个切分结果对应的多样性类别"
+     "cluster_response": "GPT-4o-mini's diversity analysis response",
+     "cluster": "Parsed diversity analysis results",
+     "cluster_ids": "Diversity category corresponding to each split solution"
    }
    ```
 
-   
-
-5. 合并文件并计算相关指标。完成后，会输出一个最终结果文件，并打印`Outcome Efficiency`和`Process Efficiency`的结果。结果文件格式如下：
+5. **Merge Files and Calculate Metrics**: Upon completion, a final output file will be generated, and the results for `Outcome Efficiency` and `Process Efficiency` will be printed. The output file format is as follows:
 
    ```json
    {
-     "problem": "问题",
-     "response": "大模型的生成结果",
-     "expected_answer": "标准回答",
+     "problem": "Problem statement",
+     "response": "LLM-generated response",
+     "expected_answer": "Standard answer",
      "split_solutions": [
        {
-         "solution": "子解答",
-         "correct": True/False, //该子解答的正确性
-         "cluster": 0 //该子解答所属的思路类
+         "solution": "Sub-solution",
+         "correct": True/False, // Correctness of this sub-solution
+         "cluster": 0 // Thought cluster this sub-solution belongs to
        }
      ],
      "correct": True/False
    }
    ```
-
-   
