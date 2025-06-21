@@ -1,6 +1,25 @@
-## Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs
+# Do NOT Think That Much for 2+3=? On the Overthinking of Long Reasoning Models
 
-This repository contains the code implementation for the paper [Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs](https://arxiv.org/abs/2412.21187), including the core solution splitting functionality.
+[English](#do-not-think-that-much-for-23-on-the-overthinking-of-o1-like-llms) | [中文](readme_zh.md) | [Paper](https://arxiv.org/abs/2412.21187)
+
+This repository contains the official implementation for the paper **"Do NOT Think That Much for 2+3=? On the Overthinking of Long Reasoning Models"**.
+
+## 📰 News
+
+- **June 2025**: Code release with full evaluation pipeline
+- **May 2025**: Paper accepted at ICML2025
+
+## 🎯 Overview
+
+This project addresses the phenomenon of "overthinking" in long reasoning models. The core functionality includes:
+
+- **Solution Splitting**: Automatically segmenting LLM responses into solutions
+- **Mathematical Performance Evaluation**: Assessing correctness using both rule-based and LLM-based evaluation
+- **Solution-Level Analysis**: Evaluating correctness of each solution
+- **Diversity Analysis**: Clustering solutions to analyze reasoning diversity
+- **Efficiency Metrics**: Computing Outcome Efficiency and Process Efficiency metrics
+
+## 🚀 Quick Start
 
 ### Environment Setup
 
@@ -8,11 +27,11 @@ This repository contains the code implementation for the paper [Do NOT Think Tha
 pip install -r requirements.txt
 ```
 
-*Note: antlr4-python3-runtime==4.11.0 is mandatory. Failure to meet this requirement may lead to incorrect mathematical evaluation results.*
+**Note:** `antlr4-python3-runtime==4.11.0` is required for accurate mathematical evaluation results.
 
-#### Server Preparation
+### API Configuration
 
-Since the process involves accessing large language models, you need to configure the relevant APIs in advance: `src/api_config.json`
+Configure your model APIs in `src/api_config.json`:
 
 ```json
 {
@@ -40,106 +59,98 @@ Since the process involves accessing large language models, you need to configur
 }
 ```
 
-Here, `meta-llama/Llama-3.3-70B-Instruct` is used for solution splitting, `KbsdJames/Omni-Judge` for mathematical result evaluation, and `gpt-4o-mini` for solution diversity analysis. When filling in the configuration, `endpoint` refers to the API for accessing the specific model (recommended to deploy using `vllm`), and `model` is the name used to access the specific model.
+**Model Usage:**
 
-### Splitting and Evaluation
+- `meta-llama/Llama-3.3-70B-Instruct`: Solution splitting
+- `KbsdJames/Omni-Judge`: Mathematical evaluation
+- `gpt-4o-mini`: Solution diversity analysis
 
-#### Input File
+## 📊 Input Format
 
-The input file should be in JSONL format. See `data/debug.jsonl` for an example. Each line must contain the following fields:
+Input files should be in JSONL format (see `data/debug.jsonl` for examples):
 
 ```json
 {
   "problem": "Problem statement",
-  "response": "LLM-generated response",
-  "expected_answer": "Standard answer"
+  "response": "LLM generated response",
+  "expected_answer": "Expected answer"
 }
 ```
 
-#### Solution Splitting
+## 🔧 Usage
 
-If you only need to split the solutions without running subsequent evaluation metrics, you only need to prepare the server for `meta-llama/Llama-3.3-70B-Instruct`.
+### Solution Splitting Only
+
+If you only need to split solutions without running full evaluation:
 
 ```bash
 cd scripts
 bash ./run_split_solution.sh [input_file] [output_file]
 ```
 
-Here, `input_file` is the input file in the format described above, and `[output_file]` is the output path for the split results. Upon completion, each line in the output file will include two additional fields:
+Output will include:
 
 ```json
 {
-  "split_solutions": ["Split results"],
-  "split_answers": ["Answers corresponding to each split"]
+  "split_solutions": ["split results"],
+  "split_answers": ["answers for each split"]
 }
 ```
 
-#### Full Pipeline: Solution Splitting, Mathematical Performance Evaluation, Solution Clustering, and Metric Calculation
+### Full Pipeline
 
-After setting up all servers, run:
+Run the complete evaluation pipeline:
 
 ```bash
 cd scripts
 bash ./run_pipeline.sh [input_file] [output_file] [model]
 ```
 
-Here, `[input_file]` is the input file in the format described above, `[output_file]` is the final output file, and `[model]` is the model used to generate the input (for loading the Tokenizer).
+The full pipeline includes:
 
-The full pipeline includes the following steps:
+1. **Solution Splitting**: Segment responses into independent solutions
+2. **Mathematical Performance Evaluation**: Assess correctness using rules and LLM evaluation
+3. **Solution-Level Evaluation**: Evaluate correctness for each split
+4. **Diversity Analysis**: Analyze solution diversity using GPT-4o-mini
+5. **Metrics Computation**: Calculate Outcome Efficiency and Process Efficiency
 
-1. **Solution Splitting**: Split the LLM-generated response into independent solutions. After splitting, each line will include two additional fields:
+### Individual Components
 
-   ```json
-   {
-     "split_solutions": ["Split results"],
-     "split_answers": ["Answers corresponding to each split"]
-   }
-   ```
+You can also run individual components:
 
-2. **Mathematical Performance Evaluation**: Evaluate the mathematical performance of the LLM-generated answers. After evaluation, each line will include three additional fields:
+- **Diversity Analysis**: `bash ./run_diversity.sh`
+- **Mathematical Evaluation**: `bash ./run_math_eval.sh`
+- **Solution-Level Evaluation**: `bash ./run_solution_level_eval.sh`
 
-   ```json
-   {
-     "rule_correctness": True/False, // Result from rule-based evaluation
-     "llm_correctness": True/False, // Result from LLM-based evaluation
-     "correct": True/False // Final result combining the above two
-   }
-   ```
+## 📈 Output Metrics
 
-3. **Split Solution-Level Performance Evaluation**: Evaluate the correctness of each split solution. After evaluation, each line will include one additional field:
+The system computes two key efficiency metrics:
 
-   ```json
-   {
-     "solution_correctness": [{"correct": True/False}]
-   }
-   ```
+- **Outcome Efficiency**: Measures how efficiently the model reaches correct solutions
+- **Process Efficiency**: Measures the diversity of reasoning approaches used
 
-   This indicates the correctness of each split solution.
+## 📁 Project Structure
 
-4. **Solution Diversity Analysis**: Use `gpt-4o-mini` to analyze the diversity of solutions. After analysis, each line will include three additional fields:
+```
+├── data/                    # Data files for and temporary outputs
+├── scripts/                 # Execution scripts
+├── src/                     # Core implementation
+│   ├── prompts/            # LLM prompts for various tasks
+│   ├── split_solution.py   # Solution splitting logic
+│   ├── compute_metrics.py  # Efficiency metrics computation
+│   └── ...
+└── requirements.txt        # Python dependencies
+```
 
-   ```json
-   {
-     "cluster_response": "GPT-4o-mini's diversity analysis response",
-     "cluster": "Parsed diversity analysis results",
-     "cluster_ids": "Diversity category corresponding to each split solution"
-   }
-   ```
+## 🤝 Citation
 
-5. **Merge Files and Calculate Metrics**: Upon completion, a final output file will be generated, and the results for `Outcome Efficiency` and `Process Efficiency` will be printed. The output file format is as follows:
+If you find this work useful, please cite our paper:
 
-   ```json
-   {
-     "problem": "Problem statement",
-     "response": "LLM-generated response",
-     "expected_answer": "Standard answer",
-     "split_solutions": [
-       {
-         "solution": "Sub-solution",
-         "correct": True/False, // Correctness of this sub-solution
-         "cluster": 0 // Thought cluster this sub-solution belongs to
-       }
-     ],
-     "correct": True/False
-   }
-   ```
+```bibtex
+@article{chen2024not,
+  title={Do not think that much for 2+ 3=? on the overthinking of o1-like llms},
+  author={Chen, Xingyu and Xu, Jiahao and Liang, Tian and He, Zhiwei and Pang, Jianhui and Yu, Dian and Song, Linfeng and Liu, Qiuzhi and Zhou, Mengfei and Zhang, Zhuosheng and others},
+  journal={arXiv preprint arXiv:2412.21187},
+  year={2024}
+}
+```

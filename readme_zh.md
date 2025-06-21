@@ -1,8 +1,25 @@
-## Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs
+# Do NOT Think That Much for 2+3=? On the Overthinking of Long Reasoning Models
 
-本仓库为论文[Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs](https://arxiv.org/abs/2412.21187)的代码开源，包含核心的解答切分功能。
+[English](readme.md) | [中文](#2-3-不要想太多长推理模型的过度思考问题) | [Paper](https://arxiv.org/abs/2412.21187)
 
+本仓库包含论文 **"Do NOT Think That Much for 2+3=? On the Overthinking of Long Reasoning Models"** 的官方实现。
 
+## 📰 最新动态
+
+- **2025年6月**: 发布完整评估流程代码
+- **2025年5月**: 论文被ICML2025接收 
+
+## 🎯 概述
+
+本项目针对长推理模型中的"过度思考"现象进行研究。核心功能包括：
+
+- **解答切分**: 自动将LLM响应分割成独立的解答
+- **数学性能评估**: 使用基于规则和基于LLM的方法评估正确性
+- **解答级别分析**: 评估每个解答的正确性
+- **多样性分析**: 对解答进行聚类以分析推理多样性
+- **效率指标**: 计算结果效率和过程效率指标
+
+## 🚀 快速开始
 
 ### 环境准备
 
@@ -10,13 +27,11 @@
 pip install -r requirements.txt
 ```
 
-*注意：antlr4-python3-runtime==4.11.0 是必须项，若不满足可能导致数学评估结果有误*
+**注意:** `antlr4-python3-runtime==4.11.0` 是必需的，否则可能导致数学评估结果不准确。
 
+### API配置
 
-
-#### 服务器准备
-
-由于运行过程中需要访问大模型，需要提前配置相关API: `src/api_config.json`
+在 `src/api_config.json` 中配置您的模型API：
 
 ```json
 {
@@ -42,119 +57,100 @@ pip install -r requirements.txt
         }
     ]
 }
-
 ```
 
-其中，`meta-llama/Llama-3.3-70B-Instruct`用于解答切分，`KbsdJames/Omni-Judge`用于数学结果评估，`gpt-4o-mini`用于解答多样性分析。填写时，endpoint为具体模型访问的api（推荐使用`vllm`部署），model为具体模型访问的名字。
+**模型用途:**
 
+- `meta-llama/Llama-3.3-70B-Instruct`: 解答切分
+- `KbsdJames/Omni-Judge`: 数学评估
+- `gpt-4o-mini`: 解答多样性分析
 
+## 📊 输入格式
 
-### 切分与评估
-
-#### 输入文件
-
-输入文件为jsonl格式，可见`data/debug.jsonl`示例，每一行需要包含如下域：
+输入文件应为JSONL格式（参见 `data/debug.jsonl` 示例）：
 
 ```json
 {
-  "problem": "问题",
-  "response": "大模型的生成结果",
-  "expected_answer": "标准回答"
+  "problem": "问题描述",
+  "response": "LLM生成的响应",
+  "expected_answer": "期望答案"
 }
 ```
 
-#### 切分答案
+## 🔧 使用方法
 
-如果仅需要切分答案，不需要运行后续评估指标的计算，仅需准备`meta-llama/Llama-3.3-70B-Instruct`的服务器。
+### 仅解答切分
+
+如果只需要切分解答而不运行完整评估：
 
 ```bash
 cd scripts
 bash ./run_split_solution.sh [input_file] [output_file]
 ```
 
-其中，`input_file`为上述格式的输入文件，`[output_file]`为切分结果输出路径。完成后，输出文件的每一行会多出两个域：
+输出将包含：
 
 ```json
 {
-  "split_solutions": ["切分的结果"],
-  "split_answers": ["每一个切分对应的答案"]
+  "split_solutions": ["切分结果"],
+  "split_answers": ["每个切分对应的答案"]
 }
 ```
 
+### 完整流程
 
-
-#### 全流程: 解答切分、数学性能评估、思路聚类以及指标计算
-
-在设置好所有服务器后，运行：
+运行完整的评估流程：
 
 ```bash
 cd scripts
 bash ./run_pipeline.sh [input_file] [output_file] [model]
 ```
 
-其中，`[input_file]`为上述格式的输入文件，`[output_file]`是最终输出的结果文件，`[model]`为生成该输入的模型，用于加载Tokenizer。
+完整流程包括：
 
-全流程包括如下步骤：
+1. **解答切分**: 将响应分割成独立的解答
+2. **数学性能评估**: 使用规则和LLM评估正确性
+3. **解答级别评估**: 评估每个切分的正确性
+4. **多样性分析**: 使用GPT-4o-mini分析解答多样性
+5. **指标计算**: 计算结果效率和过程效率
 
-1. 解答切分。将大模型生成的回复切分成独立的解答。切分完成后，每一行会多出两个域：
+### 独立组件
 
-   ```json
-   {
-     "split_solutions": ["切分的结果"],
-     "split_answers": ["每一个切分对应的答案"]
-   }
-   ```
+您也可以运行独立组件：
 
-   
+- **多样性分析**: `bash ./run_diversity.sh`
+- **数学评估**: `bash ./run_math_eval.sh`
+- **解答级别评估**: `bash ./run_solution_level_eval.sh`
 
-2. 数学性能评估。对大模型生成的答案进行数学性能的评估。评估完成后，每一行会多出三个域：
+## 📈 输出指标
 
-   ```json
-   {
-     "rule_correctness": True/False, //使用规则评估的结果
-     "llm_correctness": True/False, //使用大模型评估的结果
-     "correct": True/False //综合上述两者的最终结果
-   }
-   ```
+系统计算两个关键效率指标：
 
-3. 切分解答级别的性能评估。对每一个切分出来的答案进行正确性的判定。评估完成后，每一行会多出一个域：
+- **结果效率**: 衡量模型达到正确解答的效率
+- **过程效率**: 衡量使用的推理方法的多样性
 
-   ```json
-   {
-     "solution_correctness": [{"correct": True/False}]
-   }
-   ```
+## 📁 项目结构
 
-   分别为每一个切分结果对应的正确性。
+```
+├── data/                    # 数据文件和临时输出
+├── scripts/                 # 执行脚本
+├── src/                     # 核心实现
+│   ├── prompts/            # 各种任务的LLM提示
+│   ├── split_solution.py   # 解答切分逻辑
+│   ├── compute_metrics.py  # 效率指标计算
+│   └── ...
+└── requirements.txt        # Python依赖
+```
 
-4. 解答多样性分析。调用`gpt-4o-mini`进行解答的多样性分析。分析完后，每一行会多出三个域：
+## 🤝 引用
 
-   ```json
-   {
-     "cluster_response": "gpt-4o-mini的多样性分析回复",
-     "cluster": "多样性分析解析结果",
-     "cluster_ids": "每一个切分结果对应的多样性类别"
-   }
-   ```
+如果您觉得这项工作有用，请引用我们的论文：
 
-   
-
-5. 合并文件并计算相关指标。完成后，会输出一个最终结果文件，并打印`Outcome Efficiency`和`Process Efficiency`的结果。结果文件格式如下：
-
-   ```json
-   {
-     "problem": "问题",
-     "response": "大模型的生成结果",
-     "expected_answer": "标准回答",
-     "split_solutions": [
-       {
-         "solution": "子解答",
-         "correct": True/False, //该子解答的正确性
-         "cluster": 0 //该子解答所属的思路类
-       }
-     ],
-     "correct": True/False
-   }
-   ```
-
-   
+```bibtex
+@article{chen2024not,
+  title={Do not think that much for 2+ 3=? on the overthinking of o1-like llms},
+  author={Chen, Xingyu and Xu, Jiahao and Liang, Tian and He, Zhiwei and Pang, Jianhui and Yu, Dian and Song, Linfeng and Liu, Qiuzhi and Zhou, Mengfei and Zhang, Zhuosheng and others},
+  journal={arXiv preprint arXiv:2412.21187},
+  year={2024}
+}
+```
